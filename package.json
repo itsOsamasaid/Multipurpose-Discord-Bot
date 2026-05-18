@@ -4,7 +4,11 @@
   "description": "A versatile Discord bot built with Node.js / JavaScript that supports multiple functionalities — from moderation and music playback to custom utilities for your server.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "keywords": [],
   "author": "",

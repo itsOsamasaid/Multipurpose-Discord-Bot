@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const {
   Client,
   GatewayIntentBits,
@@ -11,8 +13,30 @@ const fs    = require('fs');
 const path  = require('path');
 const chalk = require('chalk');
 
+// Recreate any missing database/ files (config.json + data stores) before the
+// config is loaded — needed for fresh clones and empty container volumes.
+const { createdConfig } = require('./modules/seed')();
+
 const config = require('./database/config.json');
 const brand  = config.branding;
+
+// Environment variables take precedence over config.json when set (e.g.
+// Railway's Variables tab or a local .env file), falling back to the file
+// otherwise. This keeps the bot token out of version control.
+config.token    = process.env.TOKEN    || config.token;
+config.clientid = process.env.CLIENTID || config.clientid;
+config.owner    = process.env.OWNER    || config.owner;
+
+// Stop early with a clear message if there's still no real token, rather than
+// failing later with a confusing Discord login error.
+if (!config.token || config.token === 'your_bot_token') {
+  console.error(chalk.red(createdConfig
+    ? '[Setup] Created database/config.json from the template.\n' +
+      '        Add your bot token to it (or set the TOKEN env var), then start again.'
+    : '[Setup] No bot token found.\n' +
+      '        Set "token" in database/config.json, or provide the TOKEN env var.'));
+  process.exit(1);
+}
 
 const client = new Client({
   intents: [

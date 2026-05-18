@@ -1,39 +1,41 @@
 # Multipurpose Discord Bot
 
-A versatile multipurpose Discord bot built with Node.js and discord.js v14 — featuring moderation, music playback, leveling, games, utilities, and full server management.
+A Discord bot I built to handle most of what a server actually needs — moderation, music, leveling, a few games, and the usual utility commands. It's written in Node.js with discord.js v14.
 
-## 🚀 What it does
+## What it does
 
-A full-featured bot designed to handle everything your Discord server needs. Modular command structure, event-based architecture, per-guild configuration, and a music system that works across multiple servers simultaneously with isolated queues.
+It's a general-purpose bot, so it does a bit of everything. Commands are split into modules, events drive most of the behavior, and each server gets its own config. The music system runs per-guild, so queues stay isolated and several servers can play at once without stepping on each other.
 
-## 🎯 Key Features
+## Features
 
 - **Moderation** — ban, kick, mute, warn, purge, rename, channel management
-- **Music** — YouTube playback via discord-player v6, per-guild queues, filters, loop, shuffle
-- **Leveling & XP** — automatic XP tracking, level-up cards via Canvas
-- **Economy** — credits, daily rewards, rep system
+- **Music** — YouTube playback through discord-player v6, per-guild queues, filters, loop, shuffle
+- **Leveling & XP** — XP tracks automatically, level-up cards are drawn with Canvas
+- **Economy** — credits, daily rewards, a rep system
 - **Games** — quiz games (capitals, flags, emoji, proverbs), rock paper scissors, giveaways
-- **Info commands** — user info, server info, role info, avatar, color lookup, prayer times
-- **Special features** — autorole, welcome system, image welcome, logging, temp voice channels, ad blocking, voice online counter
-- **Owner tools** — reload commands, DM users, manage servers, set activity
-- **Logging** — DM forwarding, command usage logs, name history tracking
+- **Info commands** — user, server, role, avatar, color lookup, prayer times
+- **Server setup** — autorole, welcome messages (text and image), logging, temp voice channels, ad blocking, voice online counter
+- **Owner tools** — reload commands, DM users, manage servers, set the bot's activity
+- **Logging** — DM forwarding, command usage, name history
 
-## 🛠 Tech Stack
+## Tech stack
 
 - **Runtime** — Node.js v18+
 - **Discord** — discord.js v14
-- **Music** — discord-player v6 + discord-player-youtubei
-- **Audio** — FFmpeg + @discordjs/opus
-- **Canvas** — canvas (level-up cards, ID cards)
-- **Database** — JSON flat-file (per-guild configs, userdata, logs)
+- **Music** — discord-player v6 with discord-player-youtubei
+- **Audio** — FFmpeg and @discordjs/opus
+- **Canvas** — the `canvas` package, for level-up cards and ID cards
+- **Database** — plain JSON files (per-guild configs, user data, logs)
 
-## 📦 Getting Started
+The JSON "database" is intentionally simple — no external DB to set up. It works fine for small-to-medium servers; if you're running this at scale you'll probably want to swap it out.
+
+## Getting started
 
 ### Prerequisites
 
 - Node.js v18 or higher
 - FFmpeg installed on your system
-- A Discord Bot Token with the following **Privileged Intents** enabled in the Developer Portal:
+- A Discord bot token with these **privileged intents** enabled in the Developer Portal:
   - `GUILD_MEMBERS`
   - `MESSAGE_CONTENT`
   - `GUILD_PRESENCES`
@@ -47,27 +49,25 @@ chmod +x install.sh
 ./install.sh
 ```
 
-The `install.sh` script installs FFmpeg, canvas build tools, and all npm packages in one step.
+`install.sh` handles FFmpeg, the build tools Canvas needs, and all the npm packages — so you shouldn't have to install anything by hand.
 
 ### Configuration
 
-Edit `database/config.json`:
+**Running it yourself (a config file)**
 
-```json
-{
-  "token": "your_bot_token",
-  "prefix": "&",
-  "owner": "your_user_id",
-  "branding": {
-    "name": "Your Bot Name",
-    "version": "1.0.0",
-    "footer": "Your footer text",
-    "colors": {
-      "primary": "ffffff"
-    }
-  }
-}
+Copy the template:
+
+```bash
+cp database/config.example.json database/config.json
 ```
+
+Then open `database/config.json` and fill in:
+
+- `token` — your bot token from the Discord Developer Portal
+- `clientid` — your bot's application ID
+- `owner` — your own Discord user ID (unlocks owner-only commands)
+- `prefix` — command prefix, defaults to `!`
+
 
 ### Running
 
@@ -75,7 +75,7 @@ Edit `database/config.json`:
 node index.js
 ```
 
-## 📁 Folder Structure
+## Folder structure
 
 ```
 ├── commands/
@@ -97,11 +97,11 @@ node index.js
 ├── modules/          # Shared utilities (tools, functions)
 ├── storage/          # Images (backgrounds, level cards)
 ├── util/             # Logger
-├── install.sh        # One-click dependency installer
+├── install.sh        # One-step dependency installer
 └── index.js
 ```
 
-## 📌 Command Categories
+## Command categories
 
 | Category | Examples |
 |----------|---------|
@@ -114,14 +114,6 @@ node index.js
 | Special | `setwlc`, `setlog`, `autorole`, `tempv`, `vonline`, `setprefix` |
 | Owner | `reload`, `dm`, `servers`, `setact`, `setav`, `restart` |
 
-## ⚙️ Migration Note (v11 → v14)
+## A note on the v11 → v14 migration
 
-This bot was fully migrated from discord.js v11 to v14.
-
-## 🤝 Contributing
-
-Contributions are welcome. Fork → branch → commit → PR.
-
-## 📄 License
-
-MIT License.
+This bot started life on discord.js v11 and has since been fully migrated to v14. That was a big jump, so if you spot anything that still smells like old code, that's probably why — feel free to open an issue.

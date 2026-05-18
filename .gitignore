@@ -1,3 +1,12 @@
+# ── Node / Discord bot ────────────────────────────────
+node_modules/
+npm-debug.log*
+
+# Real config — copy database/config.example.json to
+# database/config.json and fill it in. Never commit the real one.
+database/config.json
+
+# ── Python (kept from original template) ──────────────
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

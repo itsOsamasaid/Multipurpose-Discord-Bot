@@ -1,0 +1,40 @@
+{
+    "prefix": "!",
+    "clientid": "your_bot_client_id",
+    "token": "your_bot_token",
+    "owner": "your_discord_user_id",
+    "commands": ["admin", "bot", "bank", "colors", "fun", "games", "music", "general", "info", "mod", "owner", "special"],
+
+    "branding": {
+        "name":    "EPIC BOT",
+        "version": "1.0.0",
+        "colors": {
+            "default": "252324",
+            "success": "00FF00",
+            "error":   "FF0000",
+            "warning": "FFC000",
+            "info":    "5865F2",
+            "random":  "Random"
+        },
+        "footer": "EPIC BOT"
+    },
+
+    "db": {
+        "adblock":  "./database/adblock.json",
+        "adhan":    "./database/adhan.json",
+        "autorole": "./database/autorole.json",
+        "games":    "./database/games.json",
+        "guild":    "./database/guild.json",
+        "iwlc":     "./database/iwlc.json",
+        "last":     "./database/last.json",
+        "log":      "./database/log.json",
+        "names":    "./database/names.json",
+        "tempv":    "./database/tempv.json",
+        "text":     "./database/text.json",
+        "userdata": "./database/userdata.json",
+        "voice":    "./database/voice.json",
+        "vonline":  "./database/vonline.json",
+        "warnings": "./database/warnings.json",
+        "wlc":      "./database/wlc.json"
+    }
+}
