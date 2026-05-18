@@ -23,9 +23,11 @@ const brand  = config.branding;
 // Environment variables take precedence over config.json when set (e.g.
 // Railway's Variables tab or a local .env file), falling back to the file
 // otherwise. This keeps the bot token out of version control.
-config.token    = process.env.TOKEN    || config.token;
-config.clientid = process.env.CLIENTID || config.clientid;
-config.owner    = process.env.OWNER    || config.owner;
+// .trim() guards against a stray space or newline sneaking in when the value
+// is pasted into a hosting dashboard — a common cause of "invalid token".
+config.token    = (process.env.TOKEN    || config.token    || '').trim();
+config.clientid = (process.env.CLIENTID || config.clientid || '').trim();
+config.owner    = (process.env.OWNER    || config.owner    || '').trim();
 
 // Stop early with a clear message if there's still no real token, rather than
 // failing later with a confusing Discord login error.
@@ -180,5 +182,13 @@ client.reload  = reload;
   // Bot Login to Discord
   await client.login(config.token)
     .then(() => console.log(chalk.green('[Auth] Login successful.\n')))
-    .catch(err => console.error(chalk.red(`[Auth] Login failed:\n${err}`)));
+    .catch(err => {
+      console.error(chalk.red(`[Auth] Login failed: ${err.message}`));
+      // Describe the token's shape (never its value) to help spot a bad paste.
+      const dots = (config.token.match(/\./g) || []).length;
+      console.error(chalk.yellow(
+        `[Auth] Token received: ${config.token.length} chars, ${dots} dot(s). ` +
+        `A valid bot token is ~70 chars with exactly 2 dots.`));
+      process.exit(1);
+    });
 })();
