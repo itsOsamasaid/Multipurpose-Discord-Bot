@@ -20,7 +20,7 @@ It's a general-purpose bot, so it does a bit of everything. Commands are split i
 
 ## Tech stack
 
-- **Runtime** — Node.js v18+
+- **Runtime** — Node.js v22.12+
 - **Discord** — discord.js v14
 - **Music** — discord-player v6 with discord-player-youtubei
 - **Audio** — FFmpeg and @discordjs/opus
@@ -33,7 +33,7 @@ The JSON "database" is intentionally simple — no external DB to set up. It wor
 
 ### Prerequisites
 
-- Node.js v18 or higher
+- Node.js v22.12 or higher (discord.js v14 requires it)
 - FFmpeg installed on your system
 - A Discord bot token with these **privileged intents** enabled in the Developer Portal:
   - `GUILD_MEMBERS`
