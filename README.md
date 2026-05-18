@@ -58,7 +58,7 @@ chmod +x install.sh
 Copy the template:
 
 ```bash
-cp database/config.example.json database/config.json
+cp config.example.json database/config.json
 ```
 
 Then open `database/config.json` and fill in:

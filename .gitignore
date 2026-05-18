@@ -2,7 +2,7 @@
 node_modules/
 npm-debug.log*
 
-# Real config — copy database/config.example.json to
+# Real config — copy config.example.json to
 # database/config.json and fill it in. Never commit the real one.
 database/config.json
 

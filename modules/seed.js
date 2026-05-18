@@ -10,7 +10,9 @@ const path = require('path');
 
 const dbDir       = path.join(__dirname, '..', 'database');
 const configPath  = path.join(dbDir, 'config.json');
-const examplePath = path.join(dbDir, 'config.example.json');
+// The template lives at the repo root, NOT inside database/. A host volume
+// mounted at database/ would hide it, leaving the seed nothing to copy from.
+const examplePath = path.join(__dirname, '..', 'config.example.json');
 
 // Every JSON store the bot reads from / writes to. All start as an empty {}.
 const dataFiles = [
