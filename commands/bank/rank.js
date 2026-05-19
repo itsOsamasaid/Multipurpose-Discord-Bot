@@ -25,7 +25,7 @@ exports.run = async (client, message, args, tools) => {
     ctx.font = '15px Cairo';
     ctx.fillText(`XP ${userData.xp}`, 268, 70);
 
-    ctx.font = '15px UniSansThinCAPS';
+    ctx.font = 'bold 15px Cairo';
     ctx.fillText(`${userData.level}`, 148, 80);
     ctx.fillText(`$${userData.credits}`, 268, 90);
     ctx.fillText(`#${userData.rank || '-'}`, 273, 50);

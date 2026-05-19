@@ -46,15 +46,15 @@ exports.run = async (client, message, args, tools) => {
   ctx.fill();
 
   // Text helper
-  const text = (str, x, y, font = 'bold 16px Arial', align = 'center', color = '#ffffff') => {
+  const text = (str, x, y, font = 'bold 16px Cairo', align = 'center', color = '#ffffff') => {
     ctx.font = font; ctx.fillStyle = color; ctx.textAlign = align;
     ctx.fillText(str, x, y);
   };
 
-  text(user.username, 150, 155, 'bold 18px Arial');
-  text(`ID: ${user.id}`, 150, 178, '12px Arial');
-  text(`Joined Server: ${target.joinedAt?.toDateString() ?? 'Unknown'}`, 150, 220, '11px Arial');
-  text(`Discord Since: ${user.createdAt.toDateString()}`, 150, 240, '11px Arial');
+  text(user.username, 150, 155, 'bold 18px Cairo');
+  text(`ID: ${user.id}`, 150, 178, '12px Cairo');
+  text(`Joined Server: ${target.joinedAt?.toDateString() ?? 'Unknown'}`, 150, 220, '11px Cairo');
+  text(`Discord Since: ${user.createdAt.toDateString()}`, 150, 240, '11px Cairo');
 
   const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'id-card.png' });
   message.channel.send({ files: [attachment] });

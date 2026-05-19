@@ -101,7 +101,7 @@ module.exports = async (client, message) => {
         context.drawImage(background, 0, 0, canvas.width, canvas.height);
         const avatar = await Canvas.loadImage(message.author.displayAvatarURL({ extension: 'jpg' }));
         context.drawImage(avatar, 21, 25, 40, 40);
-        context.font      = '15px Bold';
+        context.font      = 'bold 15px Cairo';
         context.fillStyle = '#909090';
         context.textAlign = 'center';
         context.fillText(userData.level, 48, 110);

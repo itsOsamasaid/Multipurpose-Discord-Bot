@@ -13,6 +13,14 @@ const fs    = require('fs');
 const path  = require('path');
 const chalk = require('chalk');
 
+// Register the bundled Cairo font so canvas cards (profile, rank, id, welcome)
+// render real text instead of empty boxes on hosts that ship no system fonts.
+const Canvas  = require('canvas');
+const fontDir = path.join(__dirname, 'storage', 'fonts');
+Canvas.registerFont(path.join(fontDir, 'Cairo-Regular.ttf'), { family: 'Cairo' });
+Canvas.registerFont(path.join(fontDir, 'Cairo-Bold.ttf'),    { family: 'Cairo', weight: 'bold' });
+Canvas.registerFont(path.join(fontDir, 'Cairo-Light.ttf'),   { family: 'Cairo', weight: '300' });
+
 // Recreate any missing database/ files (config.json + data stores) before the
 // config is loaded — needed for fresh clones and empty container volumes.
 const { createdConfig } = require('./modules/seed')();
