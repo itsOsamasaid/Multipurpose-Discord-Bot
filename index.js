@@ -1,5 +1,13 @@
 require('dotenv').config();
 
+// Log async errors instead of crashing the process.
+process.on('unhandledRejection', (reason) => {
+  console.error('[unhandledRejection]', reason);
+});
+process.on('uncaughtException', (err) => {
+  console.error('[uncaughtException]', err);
+});
+
 const {
   Client,
   GatewayIntentBits,
