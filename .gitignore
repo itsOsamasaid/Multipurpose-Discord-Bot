@@ -2,8 +2,7 @@
 node_modules/
 npm-debug.log*
 
-# Real config — copy config.example.json to
-# database/config.json and fill it in. Never commit the real one.
+# Real config — copy from config.example.json. Never commit.
 database/config.json
 
 # ── Python (kept from original template) ──────────────

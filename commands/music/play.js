@@ -1,13 +1,7 @@
 const { QueryType, GuildQueueEvent } = require('discord-player');
 
 exports.run = async (client, message, args, tools) => {
-  if (!message.member.voice.channel)
-    return tools.error(message, "You're not in a voice channel!", client);
-
-  const queue = client.player.nodes.get(message.guild.id);
-  if (queue && message.guild.members.me.voice.channel &&
-      message.member.voice.channel.id !== message.guild.members.me.voice.channel.id)
-    return tools.error(message, "You must be in the same voice channel as me!", client);
+  if (!tools.voiceGuard(message, client)) return;
 
   if (!args.length)
     return tools.error(message, "Please provide a song name or URL. Usage: `play <song>`", client);

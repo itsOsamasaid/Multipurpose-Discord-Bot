@@ -1,14 +1,4 @@
-# Railway build config (Nixpacks).
-# install.sh is only for local Ubuntu setup — Railway never runs it,
-# so the system packages it installs are declared here instead.
-#
-#   ffmpeg            -> required by discord-player for music playback
-#   build-essential   -> compiler toolchain for native modules
-#   libcairo2-dev     -> }
-#   libpango1.0-dev   -> }  native build/runtime deps for the `canvas`
-#   libjpeg-dev       -> }  package (level-up cards, ID cards)
-#   libgif-dev        -> }
-#   librsvg2-dev      -> }
+# Railway build (Nixpacks): system packages for ffmpeg and canvas native deps.
 
 [phases.setup]
 aptPkgs = [

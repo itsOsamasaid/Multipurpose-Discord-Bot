@@ -21,32 +21,25 @@ const fs    = require('fs');
 const path  = require('path');
 const chalk = require('chalk');
 
-// Register the bundled Cairo font so canvas cards (profile, rank, id, welcome)
-// render real text instead of empty boxes on hosts that ship no system fonts.
+// Register the bundled Cairo font for canvas cards.
 const Canvas  = require('canvas');
 const fontDir = path.join(__dirname, 'storage', 'fonts');
 Canvas.registerFont(path.join(fontDir, 'Cairo-Regular.ttf'), { family: 'Cairo' });
 Canvas.registerFont(path.join(fontDir, 'Cairo-Bold.ttf'),    { family: 'Cairo', weight: 'bold' });
 Canvas.registerFont(path.join(fontDir, 'Cairo-Light.ttf'),   { family: 'Cairo', weight: '300' });
 
-// Recreate any missing database/ files (config.json + data stores) before the
-// config is loaded — needed for fresh clones and empty container volumes.
+// Create any missing database/ files before loading config.
 const { createdConfig } = require('./modules/seed')();
 
 const config = require('./database/config.json');
 const brand  = config.branding;
 
-// Environment variables take precedence over config.json when set (e.g.
-// Railway's Variables tab or a local .env file), falling back to the file
-// otherwise. This keeps the bot token out of version control.
-// .trim() guards against a stray space or newline sneaking in when the value
-// is pasted into a hosting dashboard — a common cause of "invalid token".
+// Env vars override config.json. .trim() strips stray whitespace from pasted values.
 config.token    = (process.env.TOKEN    || config.token    || '').trim();
 config.clientid = (process.env.CLIENTID || config.clientid || '').trim();
 config.owner    = (process.env.OWNER    || config.owner    || '').trim();
 
-// Stop early with a clear message if there's still no real token, rather than
-// failing later with a confusing Discord login error.
+// Bail early with a clear message if no real token.
 if (!config.token || config.token === 'your_bot_token') {
   console.error(chalk.red(createdConfig
     ? '[Setup] Created database/config.json from the template.\n' +
@@ -200,7 +193,7 @@ client.reload  = reload;
     .then(() => console.log(chalk.green('[Auth] Login successful.\n')))
     .catch(err => {
       console.error(chalk.red(`[Auth] Login failed: ${err.message}`));
-      // Describe the token's shape (never its value) to help spot a bad paste.
+      // Token shape (not value) to help spot a bad paste.
       const dots = (config.token.match(/\./g) || []).length;
       console.error(chalk.yellow(
         `[Auth] Token received: ${config.token.length} chars, ${dots} dot(s). ` +

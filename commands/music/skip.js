@@ -1,9 +1,6 @@
 exports.run = (client, message, args, tools) => {
-  const queue = client.player.nodes.get(message.guild.id);
-  if (!message.member.voice.channel)
-    return tools.error(message, "You're not in a voice channel!", client);
-  if (!queue || !queue.isPlaying())
-    return tools.error(message, "No music is currently playing!", client);
+  const queue = tools.musicGuard(message, client);
+  if (!queue) return;
 
   const track = queue.currentTrack;
   queue.node.skip();

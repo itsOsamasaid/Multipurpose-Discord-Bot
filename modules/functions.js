@@ -69,6 +69,31 @@ module.exports = {
             .setTimestamp();
     },
 
+    // Music commands: user must be in voice and in the same channel as the bot.
+    voiceGuard(message, client) {
+        if (!message.member.voice.channel) {
+            this.error(message, "You're not in a voice channel!", client);
+            return false;
+        }
+        const botVoice = message.guild.members.me.voice.channel;
+        if (botVoice && message.member.voice.channel.id !== botVoice.id) {
+            this.error(message, "You must be in the same voice channel as me!", client);
+            return false;
+        }
+        return true;
+    },
+
+    // voiceGuard + active queue. Returns the queue or null. Works while paused.
+    musicGuard(message, client) {
+        if (!this.voiceGuard(message, client)) return null;
+        const queue = client.player.nodes.get(message.guild.id);
+        if (!queue || !queue.currentTrack) {
+            this.error(message, "No music is currently playing!", client);
+            return null;
+        }
+        return queue;
+    },
+
     color(key = 'default') {
         return `#${(brand.colors[key] ?? brand.colors.default).replace('#', '')}`;
     },

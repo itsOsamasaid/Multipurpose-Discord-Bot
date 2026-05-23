@@ -1,8 +1,7 @@
 const { QueryType } = require('discord-player');
 
 exports.run = async (client, message, args, tools) => {
-  if (!message.member.voice.channel)
-    return tools.error(message, "You're not in a voice channel!", client);
+  if (!tools.voiceGuard(message, client)) return;
   if (!args.length)
     return tools.error(message, "Please provide a search query. Usage: `search <song>`", client);
 
