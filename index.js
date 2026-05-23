@@ -176,6 +176,11 @@ client.reload  = reload;
   loadCommands();
   loadEvents();
 
+  // Print which voice/crypto/opus/ffmpeg libs actually loaded.
+  const { generateDependencyReport } = require('@discordjs/voice');
+  console.log(chalk.cyan('[Voice] Dependency report:'));
+  console.log(generateDependencyReport());
+
   const player = new Player(client);
   await player.extractors.register(YoutubeiExtractor, {});
   client.player = player;
