@@ -185,8 +185,11 @@ client.reload  = reload;
   // SoundCloud, Spotify, Apple Music, Vimeo, etc.
   const { DefaultExtractors } = require('@discord-player/extractor');
   await player.extractors.loadMulti(DefaultExtractors);
-  // useYoutubeDL routes streaming through yt-dlp, which tracks YouTube changes.
-  await player.extractors.register(YoutubeiExtractor, { useYoutubeDL: true });
+  // Use yt-dlp for streaming + iOS player_client to bypass YouTube bot detection.
+  await player.extractors.register(YoutubeiExtractor, {
+    useYoutubeDL: true,
+    overrideDownloadOptions: { extractorArgs: 'youtube:player_client=ios' },
+  });
   client.player = player;
   console.log(chalk.green('[Music] Player ready.\n'));
 

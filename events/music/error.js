@@ -10,4 +10,8 @@ module.exports = (client) => {
     console.error(`[Music] error in guild ${queue.guild.id}:`, error.message);
     if (channel) channel.send(`❌ Could not process track: \`${error.message}\``).catch(() => {});
   });
+
+  // Verbose debug — dump everything the player does to diagnose silent audio.
+  client.player.events.on('debug', (queue, msg) => console.log('[Player debug]', msg));
+  client.player.on('debug', (msg) => console.log('[Player core]', msg));
 };
